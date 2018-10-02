@@ -1,0 +1,19 @@
+{
+  "name": "color-palette",
+  "version": "1.0.0",
+  "description": "Color picker using express and Jquery",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Paul Kim",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "knex": "^0.15.2",
+    "pg": "^7.4.3",
+    "yargs": "^12.0.2"
+  }
+}
