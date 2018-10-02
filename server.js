@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const yargs = require('yargs');
 
 const env = process.env.NODE_ENV || 'development';
 const configure = require('./knexfile')[env];
