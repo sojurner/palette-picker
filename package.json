@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
     "knex": "^0.15.2",
     "pg": "^7.4.3",
     "yargs": "^12.0.2"
