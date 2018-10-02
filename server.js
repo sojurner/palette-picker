@@ -2,9 +2,9 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const yargs = require('yargs');
 
-const environment = process.env.NODE_ENV || 'production';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuration);
+const env = process.env.NODE_ENV || 'development';
+const configure = require('./knexfile')[env];
+const database = require('knex')(configure);
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,15 +27,30 @@ app.use(express.static(__dirname + '/public'));
 //converts any JSON to an Object
 
 //setting up a route to main page
-app.get('/', (request, response) => {
-  console.log(request.body);
-  // response.render('index');
-  console.log(process);
+app.get('/api/v1/projects', (request, response) => {
+  database
+    .raw('select * from projects')
+    .then(function(projects) {
+      res.send(projects.rows);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
+  database('projects')
+    .select()
+    .then(projects => {
+      console.log(json(projects));
+    });
 });
 
-app.get('/');
+// app.get('/api/v1/projects/:id', (request, response) => {
+//   database.
+// })
 
-//listening for any requests on pory 3000
+app.post({});
+
+//listening for any requests on port 3000
 app.listen(port, () => {
   console.log('server is listening on 3000');
 });
