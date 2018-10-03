@@ -25,20 +25,21 @@ function handleKeyDown(event) {
   //checking if there are any existing colors that are locked
   var createdPalette = $('.hex').find('.lock-active').length;
   if (event.keyCode === 32 && !createdPalette) {
-    //if there are not then a while loop to generate 5 new colors, instantiating a color object and passing to a function that converts it to hexcode
+    //if there are none, then a while loop runs to generate 5 new colors, instantiating a color object and passing to a function that converts it to hexcode
     while (number < 5) {
       var rgbColor = new Color();
       var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
       prependHex(hexCode, number);
       number++;
     }
+    // if there are locked colors then filter the colors that don't have the locked class
   } else if (event.keyCode === 32 && createdPalette) {
     var changeShirts = $('.hex')
       .find('div')
       .filter(':not(.lock-active)');
-
+    //remove the colors that are not locked
     changeShirts.closest('section').remove();
-
+    //iterate through global obj to find the corresponding indices that have a false value and pass the number to prepend function
     Object.keys(colorTracker).forEach(number => {
       if (!colorTracker[number]) {
         var rgbColor = new Color();
@@ -47,6 +48,7 @@ function handleKeyDown(event) {
       }
     });
   }
+  //prepend a save icon
   var saveButton = $('<i>', {
     class: 'fas fa-cloud-download-alt',
     text: 'save'
@@ -54,19 +56,20 @@ function handleKeyDown(event) {
 
   $('.hex').prepend(saveButton);
 }
-
+//function that converts rgb
 function rgbToHex(r, g, b) {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
-
 function prependHex(code, number) {
+  //check if there are 5 shirt icons
   if ($('.hex').find('i.fa-tshirt').length === 5) {
+    //remove all shirts
     $('.hex').empty();
   }
-
+  //template literal to pass to prepend method to render it to our html
   var newColor = `
   <section class="color-container color-container-${number}">
-    <i class="fas fa-tshirt shirt-${number}" style="color:${code}" > </i>
+    <i class="fas fa-tshirt shirt-${number}" style="color:${code}"/>
     <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
     <div class="locks lock-${number}">
       <button class="lock-button" style="background-color:${code}"></button>
@@ -81,8 +84,10 @@ $('window').ready(getProjects);
 
 function getProjects() {
   console.log('fetch to projects');
+
   // $.ajax;
   //fetch('/api/v1/projects').then(response)
+  // $('.side-bar').prepend(')
 }
 
 $('.hex').on('click', '.lock-button', lockShirt);
@@ -121,6 +126,5 @@ function saveShirts() {
     }
   }
   array.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
-
   console.log(array);
 }
