@@ -23,9 +23,8 @@ function handleKeyDown(event) {
   if (event.keyCode === 32 && !createdPalette) {
     while (number < 5) {
       var rgbColor = new Color();
-      colorArray.push(rgbColor);
-      var hex = rgbToHex(rgbColor.rgb1, rgbColor.rgb2, rgbColor.rgb3);
-      return hex;
+      var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
+      prependHex(hexCode, number);
       number++;
     }
   }
