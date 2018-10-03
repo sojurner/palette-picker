@@ -51,7 +51,7 @@ function handleKeyDown(event) {
 }
 
 function rgbToHex(r, g, b) {
-  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 $('window').ready(getProjects);
