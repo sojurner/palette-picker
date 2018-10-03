@@ -42,10 +42,12 @@ function handleKeyDown(event) {
   }
     });
 }
+  var saveButton = $('<i>', {
+    class: 'fas fa-cloud-download-alt',
+    text: 'save'
+  });
 
-function componentToHex(c) {
-  var hex = c.toString(16);
-  return hex.length == 1 ? '0' + hex : hex;
+  $('.hex').prepend(saveButton);
 }
 
 function rgbToHex(r, g, b) {
