@@ -137,3 +137,6 @@ function saveShirts() {
   array.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
   console.log(array);
 }
+
+$('.side-bar').on('click', '.down, .up', handleProjectClick);
+
