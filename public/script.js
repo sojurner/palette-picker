@@ -7,13 +7,13 @@ var Color = function() {
 Color.prototype.randomizePalette = function() {
   return Math.floor(Math.random() * 359);
 };
-
-$('.save').on('click', text);
-
-function text(event) {
-  event.preventDefault();
-}
-
+let colorTracker = {
+  0: false,
+  1: false,
+  2: false,
+  3: false,
+  4: false
+};
 $(document).on('keydown', handleKeyDown);
 
 function handleKeyDown(event) {
