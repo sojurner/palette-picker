@@ -163,3 +163,8 @@ function handleProjectClick(event) {
       color_five: '#FCE5A3'
     }
   ];
+
+  if ($(this).hasClass('down')) {
+    $(this).removeClass('fas fa-chevron-down down');
+    $(this).addClass('fas fa-chevron-up up');
+
