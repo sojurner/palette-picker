@@ -53,7 +53,6 @@ function handleKeyDown(event) {
     class: 'fas fa-cloud-download-alt',
     text: 'save'
   });
-
   $('.hex').prepend(saveButton);
 }
 //function that converts rgb
@@ -84,10 +83,20 @@ $('window').ready(getProjects);
 
 function getProjects() {
   console.log('fetch to projects');
+  var projects = ['project1', 'project2'];
 
+  projects.forEach(project => {
+    var projectHTML = `
+      <div class="projects-palette">
+      <span class="project-name">${project}</span>
+      <i class="fas fa-chevron-down down"></i>
+      <section class="palettes"></section>
+      </div>
+      `;
+    $('.side-bar').append(projectHTML);
+  });
   // $.ajax;
   //fetch('/api/v1/projects').then(response)
-  // $('.side-bar').prepend(')
 }
 
 $('.hex').on('click', '.lock-button', lockShirt);
