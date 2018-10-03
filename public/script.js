@@ -34,7 +34,13 @@ function handleKeyDown(event) {
 
     changeShirts.closest('section').remove();
 
+    Object.keys(colorTracker).forEach(number => {
+      if (!colorTracker[number]) {
+        var rgbColor = new Color();
+        var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
+        prependHex(hexCode, number);
   }
+    });
 }
 
 function componentToHex(c) {
