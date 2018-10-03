@@ -140,3 +140,26 @@ function saveShirts() {
 
 $('.side-bar').on('click', '.down, .up', handleProjectClick);
 
+function handleProjectClick(event) {
+  event.preventDefault();
+  let projects = [{ title: 'project1', project_id: 123 }];
+  let palettes1 = [
+    {
+      title: 'light',
+      project_id: 123,
+      color_one: '#133760',
+      color_two: '#6152A2',
+      color_three: '#79A8D7',
+      color_four: '#A8C3C8',
+      color_five: '#FCE5A3'
+    },
+    {
+      title: 'dark',
+      project_id: 123,
+      color_one: '#133760',
+      color_two: '#6152A2',
+      color_three: '#79A8D7',
+      color_four: '#A8C3C8',
+      color_five: '#FCE5A3'
+    }
+  ];
