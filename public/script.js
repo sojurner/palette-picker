@@ -19,8 +19,8 @@ $(document).on('keydown', handleKeyDown);
 function handleKeyDown(event) {
   event.preventDefault();
   var number = 0;
-  var colorArray = [];
-  if (event.keyCode === 32) {
+  var createdPalette = $('.hex').find('.lock-active').length;
+  if (event.keyCode === 32 && !createdPalette) {
     while (number < 5) {
       var rgbColor = new Color();
       colorArray.push(rgbColor);
