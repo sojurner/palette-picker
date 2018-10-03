@@ -194,3 +194,16 @@ function handleProjectClick(event) {
       }" disabled="false"/>
   
   `;
+      $(this)
+        .next('.palettes')
+        .append(paletteHTML);
+    });
+  } else {
+    console.log('fired');
+    $(this).removeClass('fas fa-chevron-up up');
+    $(this).addClass('fas fa-chevron-down down');
+    $(this)
+      .next('.palettes')
+      .empty();
+  }
+}
