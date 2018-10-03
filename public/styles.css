@@ -72,6 +72,10 @@ main {
   color: rgb(169, 165, 160);
 }
 
+.fa-feather-alt {
+  font-size: 3rem;
+}
+
 .fa-tshirt {
   margin: auto;
   color: aliceblue;
