@@ -44,9 +44,9 @@ function handleKeyDown(event) {
         var rgbColor = new Color();
         var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
         prependHex(hexCode, number);
-  }
+      }
     });
-}
+  }
   var saveButton = $('<i>', {
     class: 'fas fa-cloud-download-alt',
     text: 'save'
