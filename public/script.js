@@ -1,7 +1,7 @@
 var Color = function() {
-  this.rgb1 = this.randomizePalette();
-  this.rgb2 = this.randomizePalette();
-  this.rgb3 = this.randomizePalette();
+  this.r = this.randomizePalette();
+  this.g = this.randomizePalette();
+  this.b = this.randomizePalette();
 };
 
 Color.prototype.randomizePalette = function() {
