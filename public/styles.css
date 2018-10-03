@@ -1,0 +1,177 @@
+@font-face {
+  font-family: cylla;
+  src: url(./fonts/Cylla1.ttf);
+}
+
+@font-face {
+  font-family: moon;
+  src: url(./fonts/Moon-Regular.otf);
+}
+
+@font-face {
+  font-family: xtreme;
+  src: url(./fonts/xtreem.ttf);
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
+.title {
+  font-size: 5rem;
+  font-family: xtreme;
+  font-weight: 50;
+  color: rgb(74, 96, 125);
+
+  margin: 5rem auto;
+  animation: morphingLogo 3s linear infinite;
+}
+
+.description {
+  font-family: moon;
+  font-size: 3rem;
+  margin: auto;
+  letter-spacing: 0.5rem;
+}
+
+.hex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  max-width: 620px;
+}
+
+.fa-cloud-download-alt {
+  font-size: 1.5rem;
+  height: 2rem;
+  width: 4.5rem;
+  grid-column: 2 /3;
+  grid-row: 3 / 4;
+  justify-self: center;
+  align-self: center;
+  padding-bottom: 2rem;
+  border-radius: 1rem;
+}
+
+.fa-cloud-download-alt::before {
+  margin-right: 0.5rem;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.fa-cloud-download-alt:hover {
+  color: rgb(169, 165, 160);
+}
+
+.fa-tshirt {
+  margin: auto;
+  color: aliceblue;
+  padding: 5rem 4rem 0 4rem;
+  animation: fadeIn 1s linear;
+  font-size: 10rem;
+
+  border-radius: 50%;
+}
+
+.lock-button {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.locks {
+  margin: 0rem auto 0 auto;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(230, 230, 230);
+  border-radius: 0.5rem;
+  width: 5rem;
+}
+
+.lock-active {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: rgb(198, 232, 221);
+}
+
+.lock-description {
+  margin: 0 0.2rem;
+  font-family: moon;
+}
+
+.hex-code {
+  margin: 0 auto 0 auto;
+  color: black;
+  font-size: 1.5rem;
+
+  font-family: moon;
+  font-weight: 800;
+}
+
+.lock-button:hover {
+  filter: grayscale(60%);
+}
+
+button:focus {
+  outline: 0;
+}
+
+.color-container-0 {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+.color-container-1 {
+  grid-row: 1 / 2;
+  grid-column: 3 / 4;
+}
+
+.color-container-2 {
+  grid-row: 2 / 3;
+  grid-column: 2 /3;
+}
+
+.color-container-3 {
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
+}
+
+.color-container-4 {
+  grid-row: 3 / 4;
+  grid-column: 3 / 4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-15%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes morphingLogo {
+  0% {
+    filter: hue-rotate(-90deg);
+  }
+  50% {
+    filter: hue-rotate(90deg);
+  }
+  100% {
+    filter: hue-rotate(-90deg);
+  }
+}
