@@ -79,10 +79,24 @@ function getProjects() {
   // $.ajax;
   //fetch('/api/v1/projects').then(response)
 }
-function getProjects() {
-  console.log('fetch to projects');
-  // $.ajax;
-  //fetch('/api/v1/projects').then(response)
+
+$('.hex').on('click', '.lock-button', lockShirt);
+
+function lockShirt() {
+  var checkActive = $(this)
+    .closest('div')
+    .hasClass('lock-active');
+  var parentClass = $(this).closest('div');
+  var siblings = $(this).siblings('span');
+  if (!checkActive) {
+    parentClass.addClass('lock-active');
+    colorTracker[parentClass.attr('class').slice(11, 12)] = true;
+    siblings.text('discard');
+  } else {
+    parentClass.removeClass('lock-active');
+    colorTracker[parentClass.attr('class').slice(11, 12)] = false;
+    siblings.text('keep');
+  }
 }
 
 $('.hex').on('click', '.lock-button', lockShirt);
