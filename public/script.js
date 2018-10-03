@@ -168,3 +168,29 @@ function handleProjectClick(event) {
     $(this).removeClass('fas fa-chevron-down down');
     $(this).addClass('fas fa-chevron-up up');
 
+    // $.ajax;
+    // fetch('/api/v1/palettes/id:').then(response)
+    // event.target.textContent
+    let targetClass = '';
+    console.log($(this));
+    // if (eventClass.includes('down')) {
+    palettes1.forEach((palette, index) => {
+      var paletteHTML = `
+  <h4>${palette.title}</h4>
+  <i class="fas fa-feather feather-${palette.project_id}" style="color:${
+        palette.color_one
+      }" disabled="false"/>
+  <i class="fas fa-feather feather-${palette.project_id}" style="color:${
+        palette.color_two
+      }" disabled="false"/>
+  <i class="fas fa-feather feather-${palette.project_id}" style="color:${
+        palette.color_three
+      }" disabled="false"/>
+  <i class="fas fa-feather feather-${palette.project_id}" style="color:${
+        palette.color_four
+      }" disabled="false"/>
+  <i class="fas fa-feather feather-${palette.project_id}" style="color:${
+        palette.color_five
+      }" disabled="false"/>
+  
+  `;
