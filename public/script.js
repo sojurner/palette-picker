@@ -75,6 +75,7 @@ function prependHex(code, number) {
 $('window').ready(getProjects);
 
 function getProjects() {
+  console.log('fetch to projects');
   // $.ajax;
   //fetch('/api/v1/projects').then(response)
 }
