@@ -1,12 +1,14 @@
+//Constructor function for colors.
 var Color = function() {
   this.r = this.randomizePalette();
   this.g = this.randomizePalette();
   this.b = this.randomizePalette();
 };
-
+//Method for constructor function creating a random number between 1-359
 Color.prototype.randomizePalette = function() {
   return Math.floor(Math.random() * 359);
 };
+//Based on how I structured my code, declared a global object that tracks whether a color was locked to have access to the number so that a newly generated color would take the place of the old color
 let colorTracker = {
   0: false,
   1: false,
@@ -14,13 +16,16 @@ let colorTracker = {
   3: false,
   4: false
 };
+//event listener for keydown of spacebar
 $(document).on('keydown', handleKeyDown);
 
 function handleKeyDown(event) {
   event.preventDefault();
   var number = 0;
+  //checking if there are any existing colors that are locked
   var createdPalette = $('.hex').find('.lock-active').length;
   if (event.keyCode === 32 && !createdPalette) {
+    //if there are not then a while loop to generate 5 new colors, instantiating a color object and passing to a function that converts it to hexcode
     while (number < 5) {
       var rgbColor = new Color();
       var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
