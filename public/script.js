@@ -54,6 +54,24 @@ function rgbToHex(r, g, b) {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
+function prependHex(code, number) {
+  if ($('.hex').find('i.fa-tshirt').length === 5) {
+    $('.hex').empty();
+  }
+
+  var newColor = `
+  <section class="color-container color-container-${number}">
+    <i class="fas fa-tshirt shirt-${number}" style="color:${code}" > </i>
+    <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
+    <div class="locks lock-${number}">
+      <button class="lock-button" style="background-color:${code}"></button>
+      <span class="lock-description">keep</span>
+    </div>
+  </section>
+  `;
+  $('.hex').prepend(newColor);
+}
+
 $('window').ready(getProjects);
 
 function getProjects() {
