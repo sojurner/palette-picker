@@ -14,7 +14,7 @@
 }
 
 body {
-  background-color: black;
+  background-color: rgb(230, 230, 230);
 }
 
 .title {
@@ -37,7 +37,7 @@ body {
 
 main {
   display: grid;
-  grid-template-columns: 1fr 5rem;
+  grid-template-columns: 1fr 10rem;
 }
 
 .side-bar {
