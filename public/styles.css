@@ -14,7 +14,7 @@
 }
 
 body {
-  background-color: #f0f0f0;
+  background-color: rgb(230, 230, 230);
 }
 
 .title {
@@ -32,6 +32,15 @@ body {
   font-size: 3rem;
   margin: auto;
   letter-spacing: 0.5rem;
+  color: white;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 10rem;
+}
+
+.side-bar {
 }
 
 .hex {
@@ -63,6 +72,10 @@ body {
   color: rgb(169, 165, 160);
 }
 
+.fa-feather-alt {
+  font-size: 3rem;
+}
+
 .fa-tshirt {
   margin: auto;
   color: aliceblue;
@@ -88,6 +101,7 @@ body {
   background-color: rgb(230, 230, 230);
   border-radius: 0.5rem;
   width: 5rem;
+  height: 1.45rem;
 }
 
 .lock-active {
@@ -103,9 +117,9 @@ body {
 
 .hex-code {
   margin: 0 auto 0 auto;
-  color: black;
+  color: white;
   font-size: 1.5rem;
-
+  position: absolute;
   font-family: moon;
   font-weight: 800;
 }
