@@ -27,6 +27,13 @@ function handleKeyDown(event) {
       prependHex(hexCode, number);
       number++;
     }
+  } else if (event.keyCode === 32 && createdPalette) {
+    var changeShirts = $('.hex')
+      .find('div')
+      .filter(':not(.lock-active)');
+
+    changeShirts.closest('section').remove();
+
   }
 }
 
