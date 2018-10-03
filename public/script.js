@@ -99,5 +99,23 @@ function lockShirt() {
   }
 }
 
-$('.hex').on('click', '.lock-button', lockShirt);
+$('.hex').on('click', '.fa-cloud-download-alt', saveShirts);
 
+function saveShirts() {
+  let array = [];
+  let j = 0;
+
+  var savedHexes = $('.hex')
+    .find('.hex-code')
+    .text();
+  console.log(savedHexes);
+  for (let i = 1; i < savedHexes.length; i++) {
+    if (savedHexes[i] === '#') {
+      array.push(savedHexes.slice(j, i));
+      j = i;
+    }
+  }
+  array.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
+
+  console.log(array);
+}
