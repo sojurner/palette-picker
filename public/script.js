@@ -79,3 +79,11 @@ function getProjects() {
   // $.ajax;
   //fetch('/api/v1/projects').then(response)
 }
+function getProjects() {
+  console.log('fetch to projects');
+  // $.ajax;
+  //fetch('/api/v1/projects').then(response)
+}
+
+$('.hex').on('click', '.lock-button', lockShirt);
+
