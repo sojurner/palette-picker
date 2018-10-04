@@ -1,11 +1,11 @@
-exports.up = async (knex, Promise) => {
-  return await Promise.all([
-    knex.schema.createTable('projects', table => {
+exports.up = function(knex, Promise) {
+  return Promise.all([
+    knex.schema.createTable('projects', function(table) {
       table.increments('id').primary();
       table.string('title').notNullable();
       table.timestamp('created_at').defaultTo(knex.fn.now());
     }),
-    knex.schema.createTable('palettes', table => {
+    knex.schema.createTable('palettes', function(table) {
       table.increments('id').primary();
       table.integer('project_id').unsigned();
       table.foreign('project_id').references('projects.id');
@@ -20,8 +20,8 @@ exports.up = async (knex, Promise) => {
   ]);
 };
 
-exports.down = async (knex, Promise) => {
-  return await Promise.all([
+exports.down = function(knex, Promise) {
+  return Promise.all([
     knex.schema.dropTable('palettes'),
     knex.schema.dropTable('projects')
   ]);
