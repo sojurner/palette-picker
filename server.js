@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const bodyparser = require('body-parser');
 
 const env = process.env.NODE_ENV || 'development';
@@ -12,7 +11,6 @@ const port = process.env.PORT || 3000;
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
-app.use(cors());
 
 //setting up a route to main page
 app.get('/api/v1/projects', (request, response) => {
