@@ -26,7 +26,7 @@ let colorTracker = {
 };
 
 $('document').ready(() => {
-  fetch('http://localhost:3000/api/v1/projects')
+  fetch('/api/v1/projects')
     .then(response => response.json())
     .then(result => {
       result.forEach(project => {
@@ -46,7 +46,7 @@ $('document').ready(() => {
 });
 
 function getPalettes(id) {
-  fetch(`http://localhost:3000/api/v1/palettes/${id}/projects`)
+  fetch(`/api/v1/palettes/${id}/projects`)
     .then(response => response.json())
     .then(result => {
       result.forEach(palette => {
@@ -234,7 +234,7 @@ function saveProject(projectName) {
   let obj = { title: projectName };
   const projects = colorTracker.projects;
   if (!projects[projectName]) {
-    fetch('http://localhost:3000/api/v1/projects', {
+    fetch('/api/v1/projects', {
       method: 'POST',
       body: JSON.stringify(obj),
       headers: {
