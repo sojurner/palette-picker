@@ -18,6 +18,15 @@ exports.seed = (knex, Promise) => {
                 color_five: '#FCE5A3'
               },
               {
+                project_id: project[0],
+                title: 'blackish',
+                color_one: '#1r3760',
+                color_two: '#6152A2',
+                color_three: '#79A8D7',
+                color_four: '#A8C3C8',
+                color_five: '#FCE5A3'
+              },
+              {
                 project_id: project[1],
                 title: 'baby teal',
                 color_one: '#469A30',

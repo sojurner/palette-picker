@@ -14,7 +14,7 @@
 }
 
 body {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(143, 143, 143);
 }
 
 .title {
@@ -98,7 +98,7 @@ main {
   margin: 0rem auto 0 auto;
   display: flex;
   flex-direction: row;
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(191, 191, 191);
   border-radius: 0.5rem;
   width: 5rem;
   height: 1.45rem;
@@ -107,7 +107,7 @@ main {
 .lock-active {
   display: flex;
   flex-direction: row-reverse;
-  background-color: rgb(198, 232, 221);
+  background-color: rgb(72, 255, 72);
 }
 
 .lock-description {
@@ -125,7 +125,7 @@ main {
 }
 
 .lock-button:hover {
-  filter: grayscale(60%);
+  filter: brightness(150%);
 }
 
 button:focus {
@@ -155,6 +155,25 @@ button:focus {
 .color-container-4 {
   grid-row: 3 / 4;
   grid-column: 3 / 4;
+}
+
+.mini-palettes {
+  padding: 0;
+  border: 1px solid rgb(208, 188, 188);
+  border-radius: 0.5rem;
+}
+
+.mini-palette-title {
+  margin: 0 auto 0.2rem auto;
+}
+
+.mini-palettes:hover {
+  /* background-color: azure; */
+}
+
+.palette-name {
+  grid-row: 3 / 4;
+  grid-column: 2 /3;
 }
 
 @keyframes fadeIn {
