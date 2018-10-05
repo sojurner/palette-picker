@@ -191,8 +191,9 @@ function prependHex(code, number) {
   //template literal to pass to prepend method to render it to our html
   var newColor = `
   <section class="color-container color-container-${number}">
-    <i class="fas fa-tshirt shirt-${number}" style="color:${code}"/>
+      <i class="fas fa-tshirt shirt-${number}" style="color:${code}">
     <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
+      </i>
     <div class="locks lock-${number}">
       <button class="lock-button" style="background-color:${code}"/>
       <span class="lock-description">keep</span>
