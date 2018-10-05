@@ -45,10 +45,13 @@ app.get('/api/v1/palettes/:id/projects', (request, response) => {
     .catch(err => console.log(err));
 });
 
-app.get('/api/v1/palettes', (request, response) => {
+app.get('/api/v1/palettes/:id/projects', (request, response) => {
   database('palettes')
+    .where('project_id', request.params.id)
     .then(palette => {
+      if (palette.length) {
       response.status(200).json(palette);
+      }
     })
     .catch(err => console.log(err));
 });
