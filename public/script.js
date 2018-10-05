@@ -225,14 +225,15 @@ function lockShirt() {
 $('.hex').on('click', '.fa-cloud-download-alt', handleSave);
 
 function handleSave() {
-  console.log('clicked');
+  $('body').addClass('body-active');
+
   if (!$('.hex').find('.palette-name').length) {
     var paletteHTML = $('<h1>', {
       class: 'palette-name',
       contenteditable: 'true',
       text: 'Collection Name?'
     });
-    $('.hex').append(paletteHTML);
+    $('html').append(paletteHTML);
   }
   setTimeout(function() {
     $('.palette-name').focus();
