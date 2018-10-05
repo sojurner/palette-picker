@@ -115,6 +115,47 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       response.status(500).json({ error });
     });
 });
+
+// app.delete('/api/v1/projects/:id', (request, response) => {
+//   const { id } = request.params;
+
+//   database('palettes')
+//     .where('foreign_id', id)
+//     .del()
+//     .then(result => {
+//       if (result) {
+//         return response.status(200).json({
+//           result: `${result} was deleted`
+//         });
+//       } else {
+//         return response
+//           .status(404)
+//           .json({ error: `${result} was not deleted` });
+//       }
+//     })
+//     .catch(error => {
+//       response.status(500).json({ error });
+//     });
+
+//   database('projects')
+//     .where('id', id)
+//     .del()
+//     .then(result => {
+//       if (result) {
+//         return response.status(200).json({
+//           result: `${result} was deleted`
+//         });
+//       } else {
+//         return response
+//           .status(404)
+//           .json({ error: `${result} was not deleted` });
+//       }
+//     })
+//     .catch(error => {
+//       response.status(500).json({ error });
+//     });
+// });
+
 //listening for any requests on port 3000
 app.listen(port, () => {
   console.log('server is listening on 3000');
