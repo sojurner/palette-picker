@@ -19,11 +19,6 @@ app.get('/api/v1/projects', (request, response) => {
     .catch(function(err) {
       console.log('cannot get');
     });
-  // database('projects')
-  //   .select()
-  //   .then(projects => {
-  //     console.log(json(projects));
-  //   });
 });
 
 app.get('/api/v1/projects/:id', (request, response) => {
