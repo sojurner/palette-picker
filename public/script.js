@@ -166,9 +166,12 @@ function handleKeyDown(event) {
     if (poloFocus && colorTracker.projectField) {
       $('.polo-name').blur();
       saveProject(poloName);
+      $('body').removeClass('body-active');
     } else if (paletteFocus) {
-      $('.palette-name').blur();
-      saveShirts(paletteName);
+      // $(this).remove();
+      $('.palette-name').remove();
+      saveShirts(paletteName, poloName);
+      $('body').removeClass('body-active');
     }
   }
 }
