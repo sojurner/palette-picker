@@ -302,7 +302,7 @@ function postShirts(arr, paletteName, poloName) {
     .then(result => {});
 }
 
-$('.side-bar').on('click', '.down, .up', handleProjectClick);
+$('.side-bar').on('mouseover', '.down, .up', handleProjectClick);
 
 function handleProjectClick(event) {
   event.preventDefault();
@@ -315,8 +315,12 @@ function handleProjectClick(event) {
   if ($(this).hasClass('down')) {
     $(this).removeClass('fas fa-chevron-down down');
     $(this).addClass('fas fa-chevron-up up');
+    if (colorTracker.palettes[projectID]) {
     colorTracker.palettes[projectID].forEach((palette, index) => {
       var paletteHTML = `
+      <div class="palette-control"> 
+      <i class="fas fa-window-close"/>
+
   <div class="mini-palettes">
     <h4 class="mini-palette-title">${palette.title}</h4>
     <i class="fas fa-feather ${palette.color_one}" style="color:${
