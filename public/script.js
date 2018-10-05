@@ -387,3 +387,40 @@ $('.hex').on('focus', '.polo-name', handleFocus);
 function handleFocus(event) {
   event.preventDefault();
 }
+  event.preventDefault();
+}
+
+$('.side-bar').on('click', '.fa-window-close', removePalette);
+
+function removePalette() {
+  const projectName = $(this)
+    .parents('.projects-palette')
+    .children('.project-name')
+    .text();
+
+  const targetPalette = $(this)
+    .closest('.palette-control')
+    .find('.mini-palette-title')
+    .text();
+
+  const projectID = colorTracker.projects[projectName];
+  const matchingPalette = colorTracker.palettes[projectID].find(
+    palette => palette[targetPalette]
+  );
+
+  const filteredPalletes = colorTracker.palettes[projectID].filter(
+    palette => palette.title !== targetPalette
+  );
+
+  colorTracker.palettes[projectID] = filteredPalletes;
+
+  fetch(`/api/v1/palettes/${matchingPalette.id}`, {
+    method: 'DELETE'
+  })
+    .then(response => response.json())
+    .then(result => {});
+
+  $(this)
+    .closest('.palette-control')
+    .empty();
+}
