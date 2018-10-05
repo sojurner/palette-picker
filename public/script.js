@@ -252,11 +252,13 @@ function saveProject(projectName) {
       }
     })
       .then(response => response.json())
-      .then(result => console.log(result));
+      .then(result => {
+        colorTracker.projects[projectName] = result.id;
+      });
   }
 }
 
-function saveShirts(paletteName) {
+function saveShirts(paletteName, poloName) {
   let colorArray = [];
   let j = 0;
   var savedHexes = $('.hex')
@@ -269,12 +271,11 @@ function saveShirts(paletteName) {
     }
   }
   colorArray.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
-  postShirts(colorArray, paletteName);
+  postShirts(colorArray, paletteName, poloName);
 
   $('.hex')
     .find('.palette-name')
     .remove();
-  console.log(colorTracker);
   colorTracker.currentPalette = [];
 }
 
