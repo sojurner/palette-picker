@@ -105,10 +105,11 @@ function handleKeyDown(event) {
         text: 'Edit Polo Name '
       });
 
-      $('header').append(poloField);
+      $('html').append(poloField);
 
       if (!colorTracker.projectField) {
         $('.polo-name').focus();
+        $('body').addClass('body-active');
       }
       colorTracker.projectField = true;
     }
