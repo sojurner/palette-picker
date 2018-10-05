@@ -279,23 +279,27 @@ function saveShirts(paletteName, poloName) {
   colorTracker.currentPalette = [];
 }
 
-function postShirts(arr, name) {
-  console.log(arr);
-  arr.reduce((bodyObj, color, index) => {
-    bodyObj[`color_${index + 1}`] = color;
-    bodyObj['title'] = name;
-
+function postShirts(arr, paletteName, poloName) {
+  const paletteParams = arr.reduce((bodyObj, color, index) => {
+    const numberWords = ['one', 'two', 'three', 'four', 'five'];
+    bodyObj['project_id'] = colorTracker.projects[poloName];
+    bodyObj['title'] = paletteName;
+    bodyObj[`color_${numberWords[index]}`] = color;
     return bodyObj;
   }, {});
 
+  console.log(paletteParams);
+
   const options = {
     method: 'POST',
-    body: JSON.stringify(),
+    body: JSON.stringify(paletteParams),
     headers: {
       'Content-Type': 'application/json'
     }
   };
-  // fetch('/api/v1/palettes');
+  fetch('/api/v1/palettes', options)
+    .then(response => response.json())
+    .then(result => {});
 }
 
 $('.side-bar').on('click', '.down, .up', handleProjectClick);
