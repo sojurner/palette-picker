@@ -9,7 +9,6 @@ Color.prototype.randomizePalette = function() {
   return Math.floor(Math.random() * 359);
 };
 //global state object that holds the projects, palettes, and lock status
-
 let colorTracker = {
   lockStatus: {
     0: false,
@@ -33,7 +32,7 @@ $('document').ready(() => {
         colorTracker.projects[project.title] = project.id;
         var projectHTML = `
         <div class="projects-palette">
-          <span class="project-name">${project.title}</span>
+          <span class="project-name ${project.title}">${project.title}</span>
           <i class="fas fa-chevron-down down"/>
           <section class="palettes"/>
         </div>
@@ -53,6 +52,8 @@ function getPalettes(id) {
         if (!colorTracker.palettes[palette.project_id]) {
           colorTracker.palettes[palette.project_id] = [
             {
+              [palette.title]: id,
+              id: palette.id,
               title: palette.title,
               color_one: palette.color_one,
               color_two: palette.color_two,
@@ -63,6 +64,8 @@ function getPalettes(id) {
           ];
         } else {
           colorTracker.palettes[palette.project_id].push({
+            [palette.title]: id,
+            id: palette.id,
             title: palette.title,
             color_one: palette.color_one,
             color_two: palette.color_two,
@@ -73,6 +76,7 @@ function getPalettes(id) {
         }
       });
     });
+  console.log(colorTracker);
 }
 
 //event listener for keydown of spacebar
