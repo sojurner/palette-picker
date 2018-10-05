@@ -14,7 +14,15 @@
 }
 
 body {
-  background-color: rgb(143, 143, 143);
+  background-color: rgb(233, 232, 232);
+}
+
+header {
+  display: flex;
+}
+
+.body-active {
+  opacity: 0.3;
 }
 
 .title {
@@ -22,17 +30,22 @@ body {
   font-family: xtreme;
   font-weight: 50;
   color: rgb(74, 96, 125);
-
-  margin: 5rem auto;
+  margin: 5rem auto 0 auto;
   animation: morphingLogo 3s linear infinite;
 }
 
+.space {
+  color: rgb(140, 140, 140);
+}
+
 .description {
+  width: 20rem;
+  text-align: center;
   font-family: moon;
   font-size: 3rem;
   margin: auto;
   letter-spacing: 0.5rem;
-  color: white;
+  color: rgb(186, 186, 186);
 }
 
 main {
@@ -41,6 +54,22 @@ main {
 }
 
 .side-bar {
+}
+
+.polo-name {
+  background-color: aliceblue;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  letter-spacing: 2px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.palette-name {
+  position: absolute;
+  left: 45%;
+  bottom: 10%;
 }
 
 .hex {
@@ -79,10 +108,10 @@ main {
 .fa-tshirt {
   margin: auto;
   color: aliceblue;
-  padding: 5rem 4rem 0 4rem;
+  padding: 0rem 2rem 0 2rem;
   animation: fadeIn 1s linear;
-  font-size: 10rem;
-
+  font-size: 9rem;
+  text-shadow: 3px 3px #c1c1c1;
   border-radius: 50%;
 }
 
@@ -116,8 +145,9 @@ main {
 }
 
 .hex-code {
-  margin: 0 auto 0 auto;
+  margin: -7.5rem 0 6rem 2.5rem;
   color: white;
+  letter-spacing: 2px;
   font-size: 1.5rem;
   position: absolute;
   font-family: moon;
