@@ -360,9 +360,25 @@ $('.side-bar').on('click', '.mini-palettes', handlePaletteClick);
 
 function handlePaletteClick(event) {
   event.preventDefault();
-  let colors = $(this).children('.fa-feather');
-  let x = Object.keys(colors).forEach(color => {
-    console.log(colors[color]);
+  let colors = $(this)
+    .children('h4')
+    .text();
+  let projectName = $(this)
+    .parents('.projects-palette')
+    .children('.project-name')
+    .text();
+
+  const projectID = colorTracker.projects[projectName];
+
+  const matchingPalette = colorTracker.palettes[projectID].find(
+    pallete => pallete.title === colors
+  );
+  Object.keys(matchingPalette)
+    .filter(key => key.includes('color'))
+    .forEach((key, index) => {
+      if (key.includes('color')) {
+        prependHex(matchingPalette[key], index);
+      }
   });
 }
 
