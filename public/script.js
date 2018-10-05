@@ -339,11 +339,14 @@ function handleProjectClick(event) {
         palette.color_five
       }" disabled="false"/>
   </div>
+    </div>
   `;
+
       $(this)
         .next('.palettes')
         .append(paletteHTML);
     });
+    }
   } else {
     $(this).removeClass('fas fa-chevron-up up');
     $(this).addClass('fas fa-chevron-down down');
