@@ -115,10 +115,11 @@ function handleKeyDown(event) {
       colorTracker.projectField = true;
     }
 
-    var saveButton = $('<i>', {
-      class: 'fas fa-cloud-download-alt',
-      text: 'save'
-    });
+    var saveButton = `
+    <div class="save-info">
+    <i class="fas fa-cloud-download-alt"></i>
+    <p class="save-title">Save</p>
+    </div>`;
 
     $('.hex').prepend(saveButton);
 
