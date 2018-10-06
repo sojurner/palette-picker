@@ -259,6 +259,14 @@ function saveProject(projectName) {
         colorTracker.projects[projectName] = result.id;
       });
   }
+  var projectHTML = `
+  <div class="projects-palette projects-palette-show">
+  <span class="project-name ${projectName}">${projectName}</span>
+  <i class="fas fa-chevron-down down"/>
+  <section class="palettes"/>
+  </div>
+  `;
+  $('.projects').append(projectHTML);
 }
 
 function saveShirts(paletteName, poloName) {
