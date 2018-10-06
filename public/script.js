@@ -346,7 +346,8 @@ function postShirts(arr, paletteName, poloName) {
   }
 }
 
-$('.side-bar').on('mouseover', '.down, .up', handleProjectClick);
+$('body').on('mouseenter', '.down', handleProjectClick);
+$('body').on('mouseleave', '.palettes', handleProjectClick);
 
 function handleProjectClick(event) {
   event.preventDefault();
