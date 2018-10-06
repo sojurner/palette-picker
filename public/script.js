@@ -30,15 +30,16 @@ $('document').ready(() => {
     .then(result => {
       result.forEach(project => {
         colorTracker.projects[project.title] = project.id;
+
         var projectHTML = `
-        <div class="projects-palette">
+          <div class="projects-palette projects-palette-show">
           <span class="project-name ${project.title}">${project.title}</span>
           <i class="fas fa-chevron-down down"/>
           <section class="palettes"/>
         </div>
         `;
 
-        $('.side-bar').append(projectHTML);
+        $('.projects').append(projectHTML);
         getPalettes(project.id);
       });
     });
