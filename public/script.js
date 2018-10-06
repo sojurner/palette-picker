@@ -299,8 +299,12 @@ function postShirts(arr, paletteName, poloName) {
     return bodyObj;
   }, {});
 
-  console.log(paletteParams);
-
+  if (
+    colorTracker.palettes[paletteParams.project_id] !== {} ||
+    !colorTracker.palettes[paletteParams.project_id].find(
+      palette => palette.title === paletteParams.title
+    )
+  ) {
   const options = {
     method: 'POST',
     body: JSON.stringify(paletteParams),
