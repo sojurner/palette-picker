@@ -314,7 +314,18 @@ function postShirts(arr, paletteName, poloName) {
   };
   fetch('/api/v1/palettes', options)
     .then(response => response.json())
-    .then(result => {});
+      .then(result => {
+        if (!colorTracker.palettes[result.project_id]) {
+          colorTracker.palettes[result.project_id] = [
+            {
+              [result.title]: result.project_id,
+              id: result.id,
+              title: result.title,
+              color_one: result.color_one,
+              color_two: result.color_two,
+              color_three: result.color_three,
+              color_four: result.color_four,
+              color_five: result.color_five
 }
 
 $('.side-bar').on('mouseover', '.down, .up', handleProjectClick);
