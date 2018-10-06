@@ -166,14 +166,15 @@ function handleKeyDown(event) {
     }
   } else if (event.key === 'Enter') {
     if (poloFocus && colorTracker.projectField) {
+      $('.polo-name').prop('contenteditable', false);
       $('.polo-name').blur();
       saveProject(poloName);
       $('body').removeClass('body-active');
     } else if (paletteFocus) {
-      // $(this).remove();
-      $('.palette-name').remove();
-      saveShirts(paletteName, poloName);
       $('body').removeClass('body-active');
+      $('.palette-name').remove();
+      $('.polo-name').prop('contenteditable', true);
+      saveShirts(paletteName, poloName);
     }
   }
 }
