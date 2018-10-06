@@ -1,10 +1,9 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-
-const env = process.env.NODE_ENV || 'development';
 const configure = require('./knexfile')[env];
 const database = require('knex')(configure);
 
+const env = process.env.NODE_ENV || 'development';
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -12,12 +11,11 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-//setting up a route to main page
 app.get('/api/v1/projects', (request, response) => {
   database('projects')
     .then(projects => response.status(200).json(projects))
-    .catch(function(err) {
-      console.log('cannot get');
+    .catch(err => {
+      response.status(500).json({ err });
     });
 });
 
@@ -25,12 +23,12 @@ app.get('/api/v1/projects/:id', (request, response) => {
   database('projects')
     .where('id', request.params.id)
     .then(project => {
-      if (project.length) {
-        response.status(200).json(project);
-      }
+      project.length
+        ? response.status(200).json(project)
+        : response.status(404).send({ error: 'Project does not exist' });
     })
-    .catch(function(err) {
-      console.log(err);
+    .catch(error => {
+      response.status(500).json({ error });
     });
 });
 
@@ -46,22 +44,23 @@ app.get('/api/v1/palettes/:id/projects', (request, response) => {
   database('palettes')
     .where('project_id', request.params.id)
     .then(palette => {
-      if (palette.length) {
-        response.status(200).json(palette);
-      }
+      palette.length
+        ? response.status(200).json(palette)
+        : response.status(404).send({ error: 'project does not exist' });
     })
     .catch(err => console.log(err));
 });
 
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
-
   database('projects')
     .insert(project, 'id')
     .then(project => {
       response.status(201).json({ id: project[0] });
     })
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 app.post('/api/v1/palettes', (request, response) => {
@@ -75,6 +74,7 @@ app.post('/api/v1/palettes', (request, response) => {
     'color_four',
     'color_five'
   ];
+
   paletteKeys.forEach(param => {
     if (!newPalette[param]) {
       return response.status(422).send('error');
@@ -93,67 +93,22 @@ app.post('/api/v1/palettes', (request, response) => {
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const { id } = request.params;
+
   database('palettes')
     .where('id', id)
     .del()
     .then(result => {
-      console.log(result);
-      if (result) {
-        return response.status(200).json({
-          result: `${result} was deleted`
-        });
-      } else {
-        return response
-          .status(404)
-          .json({ error: `${result} was not deleted` });
-      }
+      return result
+        ? response.status(200).json({
+            result: `${result} was deleted`
+          })
+        : response.status(404).json({ error: `${result} was not deleted` });
     })
     .catch(error => {
       response.status(500).json({ error });
     });
 });
 
-// app.delete('/api/v1/projects/:id', (request, response) => {
-//   const { id } = request.params;
-
-//   database('palettes')
-//     .where('foreign_id', id)
-//     .del()
-//     .then(result => {
-//       if (result) {
-//         return response.status(200).json({
-//           result: `${result} was deleted`
-//         });
-//       } else {
-//         return response
-//           .status(404)
-//           .json({ error: `${result} was not deleted` });
-//       }
-//     })
-//     .catch(error => {
-//       response.status(500).json({ error });
-//     });
-
-//   database('projects')
-//     .where('id', id)
-//     .del()
-//     .then(result => {
-//       if (result) {
-//         return response.status(200).json({
-//           result: `${result} was deleted`
-//         });
-//       } else {
-//         return response
-//           .status(404)
-//           .json({ error: `${result} was not deleted` });
-//       }
-//     })
-//     .catch(error => {
-//       response.status(500).json({ error });
-//     });
-// });
-
-//listening for any requests on port 3000
 app.listen(port, () => {
   console.log('server is listening on 3000');
 });

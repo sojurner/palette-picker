@@ -1,14 +1,13 @@
-//Constructor function for colors.
 let Color = function() {
   this.r = this.randomizePalette();
   this.g = this.randomizePalette();
   this.b = this.randomizePalette();
 };
-//Method for constructor function creating a random number between 1-359
+
 Color.prototype.randomizePalette = function() {
   return Math.floor(Math.random() * 359);
 };
-//global state object that holds the projects, palettes, and lock status
+
 let colorTracker = {
   lockStatus: {
     0: false,
@@ -30,13 +29,12 @@ $('document').ready(() => {
     .then(result => {
       result.forEach(project => {
         colorTracker.projects[project.title] = project.id;
-
         var projectHTML = `
           <div class="projects-palette projects-palette-show">
-          <span class="project-name ${project.title}">${project.title}</span>
-          <i class="fas fa-chevron-down down"/>
-          <section class="palettes"/>
-        </div>
+            <span class="project-name ${project.title}">${project.title}</span>
+            <i class="fas fa-chevron-down down"/>
+            <section class="palettes"/>
+          </div>
         `;
 
         $('.projects').append(projectHTML);
@@ -77,22 +75,18 @@ function getPalettes(id) {
         }
       });
     });
-  console.log(colorTracker);
 }
 
-//event listener for keydown of spacebar
 $(document).on('keydown', handleKeyDown);
 
 function handleKeyDown(event) {
   event.preventDefault();
   var number = 0;
-  //checking if there are any existing colors that are locked
   var createdPalette = $('.hex').find('.lock-active').length;
   var poloFocus = $('.polo-name').is(':focus');
   var paletteFocus = $('.palette-name').is(':focus');
 
   if (event.keyCode === 32 && !createdPalette && !poloFocus && !paletteFocus) {
-    //if there are none, then a while loop runs to generate 5 new colors, instantiating a color object and passing to a function that converts it to hexcode
     while (number < 5) {
       var rgbColor = new Color();
       var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
@@ -103,11 +97,9 @@ function handleKeyDown(event) {
       var poloField = $('<h1>', {
         class: 'polo-name',
         contentEditable: 'true',
-        text: 'Edit Polo Name '
+        text: 'Collection Name?'
       });
-
       $('html').append(poloField);
-
       if (!colorTracker.projectField) {
         $('.polo-name').focus();
         $('body').addClass('body-active');
@@ -116,14 +108,12 @@ function handleKeyDown(event) {
     }
 
     var saveButton = `
-    <div class="save-info">
-    <i class="fas fa-cloud-download-alt"></i>
-    <p class="save-title">Save</p>
-    </div>`;
+      <div class="save-info">
+        <i class="fas fa-cloud-download-alt"></i>
+        <p class="save-title">Save</p>
+      </div>`;
 
     $('.hex').prepend(saveButton);
-
-    // if there are locked colors then filter the colors that don't have the locked class
   } else if (
     event.keyCode === 32 &&
     createdPalette &&
@@ -133,9 +123,7 @@ function handleKeyDown(event) {
     var changeShirts = $('.hex')
       .find('div')
       .filter(':not(.lock-active)');
-    //remove the colors that are not locked
     changeShirts.closest('.color-container').remove();
-    //iterate through global obj to find the corresponding indices that have a false value and pass the number to prepend function
     Object.keys(colorTracker.lockStatus).forEach(number => {
       if (!colorTracker.lockStatus[number]) {
         var rgbColor = new Color();
@@ -146,62 +134,68 @@ function handleKeyDown(event) {
   }
   var paletteName = $('.palette-name').text();
   var poloName = $('.polo-name').text();
-
   var inp = String.fromCharCode(event.keyCode);
   if (/[a-zA-Z0-9-_ ]/.test(inp)) {
     if (poloFocus) {
       colorTracker.currentProject.push(event.key);
       $('.polo-name').text(colorTracker.currentProject.join(''));
-    } else if (paletteFocus) {
+    }
+    if (paletteFocus) {
       colorTracker.currentPalette.push(event.key);
       $('.palette-name').text(colorTracker.currentPalette.join(''));
     }
-  } else if (event.key === 'Backspace') {
+  }
+  if (event.key === 'Backspace') {
     if (poloFocus) {
       colorTracker.currentProject.splice(-1, 1);
       $('.polo-name').text(colorTracker.currentProject.join(''));
-    } else if (paletteFocus) {
+    }
+    if (paletteFocus) {
       colorTracker.currentPalette.splice(-1, 1);
       $('.palette-name').text(colorTracker.currentPalette.join(''));
     }
-  } else if (event.key === 'Enter') {
-    if (poloFocus && colorTracker.projectField) {
+  }
+  if (event.key === 'Enter') {
+    if (
+      poloFocus &&
+      colorTracker.projectField &&
+      $('.polo-name').text() !== 'Collection Name?' &&
+      $('.polo-name').text() !== ''
+    ) {
       $('.polo-name').prop('contenteditable', false);
       $('.polo-name').blur();
       saveProject(poloName);
       $('body').removeClass('body-active');
-    } else if (paletteFocus) {
-      $('body').removeClass('body-active');
+    }
+    if (paletteFocus && $('.palette-name').text() !== 'Polo Name?') {
       $('.palette-name').remove();
       $('.polo-name').prop('contenteditable', true);
       saveShirts(paletteName, poloName);
+      colorTracker.projectField = '';
+      $('.polo-name').text('');
+      $('body').removeClass('body-active');
     }
   }
 }
 
-//prepend a save icon
-
-//function that converts rgb
 function rgbToHex(r, g, b) {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
+
 function prependHex(code, number) {
-  //check if there are 5 shirt icons
   if ($('.hex').find('i.fa-tshirt').length === 5) {
-    //remove all shirts
     $('.hex').empty();
   }
-  //template literal to pass to prepend method to render it to our html
   var newColor = `
-  <section class="color-container color-container-${number}">
+    <section class="color-container color-container-${number}">
       <i class="fas fa-tshirt shirt-${number}" style="color:${code}">
-    <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
+      <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
       </i>
-    <div class="locks lock-${number}">
-      <button class="lock-button" style="background-color:${code}"/>
-      <span class="lock-description">keep</span>
-    </div>
-  </section>
+      <div class="locks lock-${number}">
+        <button class="lock-button" style="background-color:${code}"/>
+        <span class="lock-description">keep</span>
+      </div>
+    </section>
   `;
   $('.hex').prepend(newColor);
 }
@@ -236,8 +230,10 @@ function handleSave() {
       contenteditable: 'true',
       text: 'Polo Name?'
     });
+
     $('html').append(paletteHTML);
   }
+
   setTimeout(function() {
     $('.palette-name').focus();
   }, 1);
@@ -257,15 +253,19 @@ function saveProject(projectName) {
       .then(response => response.json())
       .then(result => {
         colorTracker.projects[projectName] = result.id;
+      })
+      .catch(error => {
+        throw new Error('Cannot make new project!');
       });
   }
   var projectHTML = `
-  <div class="projects-palette projects-palette-show">
-  <span class="project-name ${projectName}">${projectName}</span>
-  <i class="fas fa-chevron-down down"/>
-  <section class="palettes"/>
-  </div>
+    <div class="projects-palette projects-palette-show">
+      <span class="project-name ${projectName}">${projectName}</span>
+      <i class="fas fa-chevron-down down"/>
+      <section class="palettes"/>
+    </div>
   `;
+
   $('.projects').append(projectHTML);
 }
 
@@ -275,19 +275,21 @@ function saveShirts(paletteName, poloName) {
   var savedHexes = $('.hex')
     .find('.hex-code')
     .text();
+
   for (let i = 1; i < savedHexes.length; i++) {
     if (savedHexes[i] === '#') {
       colorArray.push(savedHexes.slice(j, i));
       j = i;
     }
   }
+
   colorArray.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
+  colorTracker.currentPalette = [];
   postShirts(colorArray, paletteName, poloName);
 
   $('.hex')
     .find('.palette-name')
     .remove();
-  colorTracker.currentPalette = [];
 }
 
 function postShirts(arr, paletteName, poloName) {
@@ -305,15 +307,16 @@ function postShirts(arr, paletteName, poloName) {
       palette => palette.title === paletteParams.title
     )
   ) {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(paletteParams),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  fetch('/api/v1/palettes', options)
-    .then(response => response.json())
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(paletteParams),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    fetch('/api/v1/palettes', options)
+      .then(response => response.json())
       .then(result => {
         if (!colorTracker.palettes[result.project_id]) {
           colorTracker.palettes[result.project_id] = [
@@ -326,23 +329,23 @@ function postShirts(arr, paletteName, poloName) {
               color_three: result.color_three,
               color_four: result.color_four,
               color_five: result.color_five
-}
+            }
           ];
-        } else {
-          colorTracker.palettes[result.project_id].push({
-            [result.title]: result.project_id,
-            id: result.id,
-            title: result.title,
-            color_one: result.color_one,
-            color_two: result.color_two,
-            color_three: result.color_three,
-            color_four: result.color_four,
-            color_five: result.color_five
-          });
         }
+        colorTracker.palettes[result.project_id].push({
+          [result.title]: result.project_id,
+          id: result.id,
+          title: result.title,
+          color_one: result.color_one,
+          color_two: result.color_two,
+          color_three: result.color_three,
+          color_four: result.color_four,
+          color_five: result.color_five
+        });
+      })
+      .catch(error => {
+        throw new Error(error);
       });
-  } else {
-    throw new Error('Palette for that project already exists');
   }
 }
 
@@ -354,42 +357,40 @@ function handleProjectClick(event) {
   var projectName = $(this)
     .siblings('span')
     .text();
-
   const projectID = colorTracker.projects[projectName];
-
   if ($(this).hasClass('down')) {
     $(this).removeClass('fas fa-chevron-down down');
     $(this).addClass('fas fa-chevron-up up');
     if (colorTracker.palettes[projectID]) {
-    colorTracker.palettes[projectID].forEach((palette, index) => {
-      var paletteHTML = `
-  <div class="mini-palettes">
-      <div class="title-remove">
-    <h4 class="mini-palette-title">${palette.title}</h4>
-        <i class="fas fa-window-close"/>
-      </div>
-    <i class="fas fa-feather ${palette.color_one}" style="color:${
-        palette.color_one
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_two}" style="color:${
-        palette.color_two
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_three}" style="color:${
-        palette.color_three
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_four}" style="color:${
-        palette.color_four
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_five}" style="color:${
-        palette.color_five
-      }" disabled="false"/>
-  </div>
-  `;
+      colorTracker.palettes[projectID].forEach((palette, index) => {
+        var paletteHTML = `
+          <div class="mini-palettes">
+          <div class="title-remove">
+            <h4 class="mini-palette-title">${palette.title}</h4>
+            <i class="fas fa-window-close"/>
+          </div>
+            <i class="fas fa-feather ${palette.color_one}" style="color:${
+          palette.color_one
+        }" disabled="false"/>
+            <i class="fas fa-feather ${palette.color_two}" style="color:${
+          palette.color_two
+        }" disabled="false"/>
+            <i class="fas fa-feather ${palette.color_three}" style="color:${
+          palette.color_three
+        }" disabled="false"/>
+            <i class="fas fa-feather ${palette.color_four}" style="color:${
+          palette.color_four
+        }" disabled="false"/>
+            <i class="fas fa-feather ${palette.color_five}" style="color:${
+          palette.color_five
+        }" disabled="false"/>
+          </div>
+        `;
 
-      $(this)
-        .next('.palettes')
-        .append(paletteHTML);
-    });
+        $(this)
+          .next('.palettes')
+          .append(paletteHTML);
+      });
     }
   } else {
     $(this)
@@ -407,31 +408,22 @@ $('body').on('click', '.mini-palettes', handlePaletteClick);
 function handlePaletteClick(event) {
   event.preventDefault();
   let colors = $(this)
-    .children('h4')
+    .find('h4')
     .text();
   let projectName = $(this)
     .parents('.projects-palette-show')
     .children('.project-name')
     .text();
-
   const projectID = colorTracker.projects[projectName];
-
   const matchingPalette = colorTracker.palettes[projectID].find(
     pallete => pallete.title === colors
   );
+
   Object.keys(matchingPalette)
     .filter(key => key.includes('color'))
     .forEach((key, index) => {
-      if (key.includes('color')) {
-        prependHex(matchingPalette[key], index);
-      }
-  });
-}
-
-$('.hex').on('focus', '.polo-name', handleFocus);
-
-function handleFocus(event) {
-  event.preventDefault();
+      prependHex(matchingPalette[key], index);
+    });
 }
 
 $('body').on('click', '.fa-window-close', removePalette);
@@ -448,22 +440,22 @@ function removePalette() {
     .text();
 
   const projectID = colorTracker.projects[projectName];
-
   const matchingPalette = colorTracker.palettes[projectID].find(
     palette => palette[targetPalette]
   );
-
   const filteredPalletes = colorTracker.palettes[projectID].filter(
     palette => palette.title !== targetPalette
   );
-
   colorTracker.palettes[projectID] = filteredPalletes;
 
   fetch(`/api/v1/palettes/${matchingPalette.id}`, {
     method: 'DELETE'
   })
     .then(response => response.json())
-    .then(result => {});
+    .then(result => {})
+    .catch(error => {
+      throw new Error('Can not Delete');
+    });
 
   $(this)
     .closest('.mini-palettes')
@@ -480,6 +472,7 @@ function showProjects() {
     $(this).removeClass('fa-sort-up');
     $(this).addClass('fa-bars');
   }
+
   $('.projects-palette-show').hasClass('projects-palette')
     ? $('.projects-palette-show').removeClass('projects-palette')
     : $('.projects-palette-show').addClass('projects-palette');
