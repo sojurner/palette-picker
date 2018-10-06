@@ -384,7 +384,6 @@ function handleProjectClick(event) {
         palette.color_five
       }" disabled="false"/>
   </div>
-    </div>
   `;
 
       $(this)
@@ -411,7 +410,7 @@ function handlePaletteClick(event) {
     .children('h4')
     .text();
   let projectName = $(this)
-    .parents('.projects-palette')
+    .parents('.projects-palette-show')
     .children('.project-name')
     .text();
 
@@ -434,23 +433,22 @@ $('.hex').on('focus', '.polo-name', handleFocus);
 function handleFocus(event) {
   event.preventDefault();
 }
-  event.preventDefault();
-}
 
-$('.side-bar').on('click', '.fa-window-close', removePalette);
+$('body').on('click', '.fa-window-close', removePalette);
 
 function removePalette() {
   const projectName = $(this)
-    .parents('.projects-palette')
+    .parents('.projects-palette-show')
     .children('.project-name')
     .text();
 
   const targetPalette = $(this)
-    .closest('.palette-control')
+    .closest('.title-remove')
     .find('.mini-palette-title')
     .text();
 
   const projectID = colorTracker.projects[projectName];
+
   const matchingPalette = colorTracker.palettes[projectID].find(
     palette => palette[targetPalette]
   );
