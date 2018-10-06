@@ -30,15 +30,16 @@ $('document').ready(() => {
     .then(result => {
       result.forEach(project => {
         colorTracker.projects[project.title] = project.id;
+
         var projectHTML = `
-        <div class="projects-palette">
+          <div class="projects-palette projects-palette-show">
           <span class="project-name ${project.title}">${project.title}</span>
           <i class="fas fa-chevron-down down"/>
           <section class="palettes"/>
         </div>
         `;
 
-        $('.side-bar').append(projectHTML);
+        $('.projects').append(projectHTML);
         getPalettes(project.id);
       });
     });
@@ -114,10 +115,11 @@ function handleKeyDown(event) {
       colorTracker.projectField = true;
     }
 
-    var saveButton = $('<i>', {
-      class: 'fas fa-cloud-download-alt',
-      text: 'save'
-    });
+    var saveButton = `
+    <div class="save-info">
+    <i class="fas fa-cloud-download-alt"></i>
+    <p class="save-title">Save</p>
+    </div>`;
 
     $('.hex').prepend(saveButton);
 
@@ -132,7 +134,7 @@ function handleKeyDown(event) {
       .find('div')
       .filter(':not(.lock-active)');
     //remove the colors that are not locked
-    changeShirts.closest('section').remove();
+    changeShirts.closest('.color-container').remove();
     //iterate through global obj to find the corresponding indices that have a false value and pass the number to prepend function
     Object.keys(colorTracker.lockStatus).forEach(number => {
       if (!colorTracker.lockStatus[number]) {
@@ -164,14 +166,15 @@ function handleKeyDown(event) {
     }
   } else if (event.key === 'Enter') {
     if (poloFocus && colorTracker.projectField) {
+      $('.polo-name').prop('contenteditable', false);
       $('.polo-name').blur();
       saveProject(poloName);
       $('body').removeClass('body-active');
     } else if (paletteFocus) {
-      // $(this).remove();
-      $('.palette-name').remove();
-      saveShirts(paletteName, poloName);
       $('body').removeClass('body-active');
+      $('.palette-name').remove();
+      $('.polo-name').prop('contenteditable', true);
+      saveShirts(paletteName, poloName);
     }
   }
 }
@@ -231,7 +234,7 @@ function handleSave() {
     var paletteHTML = $('<h1>', {
       class: 'palette-name',
       contenteditable: 'true',
-      text: 'Collection Name?'
+      text: 'Polo Name?'
     });
     $('html').append(paletteHTML);
   }
@@ -256,6 +259,14 @@ function saveProject(projectName) {
         colorTracker.projects[projectName] = result.id;
       });
   }
+  var projectHTML = `
+  <div class="projects-palette projects-palette-show">
+  <span class="project-name ${projectName}">${projectName}</span>
+  <i class="fas fa-chevron-down down"/>
+  <section class="palettes"/>
+  </div>
+  `;
+  $('.projects').append(projectHTML);
 }
 
 function saveShirts(paletteName, poloName) {
@@ -288,8 +299,12 @@ function postShirts(arr, paletteName, poloName) {
     return bodyObj;
   }, {});
 
-  console.log(paletteParams);
-
+  if (
+    colorTracker.palettes[paletteParams.project_id] !== {} ||
+    !colorTracker.palettes[paletteParams.project_id].find(
+      palette => palette.title === paletteParams.title
+    )
+  ) {
   const options = {
     method: 'POST',
     body: JSON.stringify(paletteParams),
@@ -299,10 +314,40 @@ function postShirts(arr, paletteName, poloName) {
   };
   fetch('/api/v1/palettes', options)
     .then(response => response.json())
-    .then(result => {});
+      .then(result => {
+        if (!colorTracker.palettes[result.project_id]) {
+          colorTracker.palettes[result.project_id] = [
+            {
+              [result.title]: result.project_id,
+              id: result.id,
+              title: result.title,
+              color_one: result.color_one,
+              color_two: result.color_two,
+              color_three: result.color_three,
+              color_four: result.color_four,
+              color_five: result.color_five
+}
+          ];
+        } else {
+          colorTracker.palettes[result.project_id].push({
+            [result.title]: result.project_id,
+            id: result.id,
+            title: result.title,
+            color_one: result.color_one,
+            color_two: result.color_two,
+            color_three: result.color_three,
+            color_four: result.color_four,
+            color_five: result.color_five
+          });
+        }
+      });
+  } else {
+    throw new Error('Palette for that project already exists');
+  }
 }
 
-$('.side-bar').on('mouseover', '.down, .up', handleProjectClick);
+$('body').on('mouseenter', '.down', handleProjectClick);
+$('body').on('mouseleave', '.palettes', handleProjectClick);
 
 function handleProjectClick(event) {
   event.preventDefault();
@@ -318,11 +363,11 @@ function handleProjectClick(event) {
     if (colorTracker.palettes[projectID]) {
     colorTracker.palettes[projectID].forEach((palette, index) => {
       var paletteHTML = `
-      <div class="palette-control"> 
-      <i class="fas fa-window-close"/>
-
   <div class="mini-palettes">
+      <div class="title-remove">
     <h4 class="mini-palette-title">${palette.title}</h4>
+        <i class="fas fa-window-close"/>
+      </div>
     <i class="fas fa-feather ${palette.color_one}" style="color:${
         palette.color_one
       }" disabled="false"/>
@@ -339,7 +384,6 @@ function handleProjectClick(event) {
         palette.color_five
       }" disabled="false"/>
   </div>
-    </div>
   `;
 
       $(this)
@@ -348,15 +392,17 @@ function handleProjectClick(event) {
     });
     }
   } else {
-    $(this).removeClass('fas fa-chevron-up up');
-    $(this).addClass('fas fa-chevron-down down');
     $(this)
-      .next('.palettes')
-      .empty();
+      .siblings('i')
+      .removeClass('.fas fa-chevron-up up');
+    $(this)
+      .siblings('i')
+      .addClass('.fas fa-chevron-down down');
+    $(this).empty();
   }
 }
 
-$('.side-bar').on('click', '.mini-palettes', handlePaletteClick);
+$('body').on('click', '.mini-palettes', handlePaletteClick);
 
 function handlePaletteClick(event) {
   event.preventDefault();
@@ -364,7 +410,7 @@ function handlePaletteClick(event) {
     .children('h4')
     .text();
   let projectName = $(this)
-    .parents('.projects-palette')
+    .parents('.projects-palette-show')
     .children('.project-name')
     .text();
 
@@ -387,23 +433,22 @@ $('.hex').on('focus', '.polo-name', handleFocus);
 function handleFocus(event) {
   event.preventDefault();
 }
-  event.preventDefault();
-}
 
-$('.side-bar').on('click', '.fa-window-close', removePalette);
+$('body').on('click', '.fa-window-close', removePalette);
 
 function removePalette() {
   const projectName = $(this)
-    .parents('.projects-palette')
+    .parents('.projects-palette-show')
     .children('.project-name')
     .text();
 
   const targetPalette = $(this)
-    .closest('.palette-control')
+    .closest('.title-remove')
     .find('.mini-palette-title')
     .text();
 
   const projectID = colorTracker.projects[projectName];
+
   const matchingPalette = colorTracker.palettes[projectID].find(
     palette => palette[targetPalette]
   );
@@ -421,6 +466,21 @@ function removePalette() {
     .then(result => {});
 
   $(this)
-    .closest('.palette-control')
+    .closest('.mini-palettes')
     .empty();
+}
+
+$('body').on('click', '.fa-bars, .fa-sort-up', showProjects);
+
+function showProjects() {
+  if ($(this).hasClass('fa-bars')) {
+    $(this).removeClass('fa-bars');
+    $(this).addClass('fa-sort-up');
+  } else {
+    $(this).removeClass('fa-sort-up');
+    $(this).addClass('fa-bars');
+  }
+  $('.projects-palette-show').hasClass('projects-palette')
+    ? $('.projects-palette-show').removeClass('projects-palette')
+    : $('.projects-palette-show').addClass('projects-palette');
 }
