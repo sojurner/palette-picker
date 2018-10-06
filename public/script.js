@@ -134,7 +134,7 @@ function handleKeyDown(event) {
       .find('div')
       .filter(':not(.lock-active)');
     //remove the colors that are not locked
-    changeShirts.closest('section').remove();
+    changeShirts.closest('.color-container').remove();
     //iterate through global obj to find the corresponding indices that have a false value and pass the number to prepend function
     Object.keys(colorTracker.lockStatus).forEach(number => {
       if (!colorTracker.lockStatus[number]) {
