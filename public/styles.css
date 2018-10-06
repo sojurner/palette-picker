@@ -44,8 +44,11 @@ i {
 }
 
 .projects-palette-show {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  color: #405e86;
   font-family: moon;
+  font-weight: 800;
+  margin: 0.5rem;
 }
 
 .projects-palette {
@@ -61,7 +64,7 @@ i {
   font-family: xtreme;
   font-weight: 50;
   color: rgb(74, 96, 125);
-  margin: 3rem auto 0 auto;
+  margin: 0 auto;
   animation: morphingLogo 3s linear infinite;
 }
 
@@ -107,7 +110,7 @@ i {
 }
 
 .hex {
-  margin: auto;
+  margin: 3rem auto 0 auto;
   width: 45rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
