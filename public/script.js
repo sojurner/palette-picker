@@ -363,11 +363,11 @@ function handleProjectClick(event) {
     if (colorTracker.palettes[projectID]) {
     colorTracker.palettes[projectID].forEach((palette, index) => {
       var paletteHTML = `
-      <div class="palette-control"> 
-      <i class="fas fa-window-close"/>
-
   <div class="mini-palettes">
+      <div class="title-remove">
     <h4 class="mini-palette-title">${palette.title}</h4>
+        <i class="fas fa-window-close"/>
+      </div>
     <i class="fas fa-feather ${palette.color_one}" style="color:${
         palette.color_one
       }" disabled="false"/>
