@@ -422,6 +422,20 @@ function postShirts(arr, paletteName, poloName) {
       .then(response => response.json())
       //using the result to store to the global variable
       .then(result => {
+        if (!colorTracker.palettes[result.project_id]) {
+          colorTracker.palettes[result.project_id] = [
+            {
+              [result.title]: result.project_id,
+              id: result.id,
+              title: result.title,
+              color_one: result.color_one,
+              color_two: result.color_two,
+              color_three: result.color_three,
+              color_four: result.color_four,
+              color_five: result.color_five
+            }
+          ];
+        }
         colorTracker.palettes[result.project_id].push({
           [result.title]: result.project_id,
           id: result.id,
