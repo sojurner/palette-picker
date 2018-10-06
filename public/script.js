@@ -171,7 +171,8 @@ function handleKeyDown(event) {
       $('.palette-name').remove();
       $('.polo-name').prop('contenteditable', true);
       saveShirts(paletteName, poloName);
-      colorTracker.projectField = '';
+      colorTracker.currentProject = [];
+      colorTracker.projectField = false;
       $('.polo-name').text('');
       $('body').removeClass('body-active');
     }
@@ -331,17 +332,18 @@ function postShirts(arr, paletteName, poloName) {
               color_five: result.color_five
             }
           ];
+        } else {
+          colorTracker.palettes[result.project_id].push({
+            [result.title]: result.project_id,
+            id: result.id,
+            title: result.title,
+            color_one: result.color_one,
+            color_two: result.color_two,
+            color_three: result.color_three,
+            color_four: result.color_four,
+            color_five: result.color_five
+          });
         }
-        colorTracker.palettes[result.project_id].push({
-          [result.title]: result.project_id,
-          id: result.id,
-          title: result.title,
-          color_one: result.color_one,
-          color_two: result.color_two,
-          color_three: result.color_three,
-          color_four: result.color_four,
-          color_five: result.color_five
-        });
       })
       .catch(error => {
         throw new Error(error);
