@@ -393,15 +393,17 @@ function handleProjectClick(event) {
     });
     }
   } else {
-    $(this).removeClass('fas fa-chevron-up up');
-    $(this).addClass('fas fa-chevron-down down');
     $(this)
-      .next('.palettes')
-      .empty();
+      .siblings('i')
+      .removeClass('.fas fa-chevron-up up');
+    $(this)
+      .siblings('i')
+      .addClass('.fas fa-chevron-down down');
+    $(this).empty();
   }
 }
 
-$('.side-bar').on('click', '.mini-palettes', handlePaletteClick);
+$('body').on('click', '.mini-palettes', handlePaletteClick);
 
 function handlePaletteClick(event) {
   event.preventDefault();
