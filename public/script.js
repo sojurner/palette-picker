@@ -234,7 +234,7 @@ function handleSave() {
     var paletteHTML = $('<h1>', {
       class: 'palette-name',
       contenteditable: 'true',
-      text: 'Collection Name?'
+      text: 'Polo Name?'
     });
     $('html').append(paletteHTML);
   }
