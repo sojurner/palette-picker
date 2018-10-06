@@ -327,6 +327,24 @@ function postShirts(arr, paletteName, poloName) {
               color_four: result.color_four,
               color_five: result.color_five
 }
+          ];
+        } else {
+          colorTracker.palettes[result.project_id].push({
+            [result.title]: result.project_id,
+            id: result.id,
+            title: result.title,
+            color_one: result.color_one,
+            color_two: result.color_two,
+            color_three: result.color_three,
+            color_four: result.color_four,
+            color_five: result.color_five
+          });
+        }
+      });
+  } else {
+    throw new Error('Palette for that project already exists');
+  }
+}
 
 $('.side-bar').on('mouseover', '.down, .up', handleProjectClick);
 
