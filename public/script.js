@@ -37,10 +37,10 @@ $('document').ready(() => {
         // template literal for html
         var projectHTML = `
           <div class="projects-palette projects-palette-show">
-          <span class="project-name ${project.title}">${project.title}</span>
-          <i class="fas fa-chevron-down down"/>
-          <section class="palettes"/>
-        </div>
+            <span class="project-name ${project.title}">${project.title}</span>
+            <i class="fas fa-chevron-down down"/>
+            <section class="palettes"/>
+          </div>
         `;
         //append to html
         $('.projects').append(projectHTML);
@@ -196,6 +196,8 @@ function handleKeyDown(event) {
       $('.palette-name').remove();
       $('.polo-name').prop('contenteditable', true);
       saveShirts(paletteName, poloName);
+      colorTracker.projectField = '';
+      $('.polo-name').text('');
     }
   }
 }
@@ -214,16 +216,17 @@ function prependHex(code, number) {
   }
   //template literal to pass to prepend method to render it to our html
   var newColor = `
-  <section class="color-container color-container-${number}">
+    <section class="color-container color-container-${number}">
       <i class="fas fa-tshirt shirt-${number}" style="color:${code}">
-    <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
+      <p class="hex-code hex-code-${number}">${code.toUpperCase()}</p>
       </i>
-    <div class="locks lock-${number}">
-      <button class="lock-button" style="background-color:${code}"/>
-      <span class="lock-description">keep</span>
-    </div>
-  </section>
+      <div class="locks lock-${number}">
+        <button class="lock-button" style="background-color:${code}"/>
+        <span class="lock-description">keep</span>
+      </div>
+    </section>
   `;
+  console.log(newColor);
   $('.hex').prepend(newColor);
 }
 
@@ -305,6 +308,31 @@ function saveShirts(paletteName, poloName) {
   colorArray.push(savedHexes.slice(savedHexes.lastIndexOf('#')));
   postShirts(colorArray, paletteName, poloName);
 
+  var paletteHTML = `
+      <div class="mini-palettes">
+      <div class="title-remove">
+        <h4 class="mini-palette-title">${paletteName}</h4>
+        <i class="fas fa-window-close"/>
+      </div>
+          <i class="fas fa-feather ${colorArray[0]}" style="color:${
+    colorArray[0]
+  }" disabled="false"/>
+          <i class="fas fa-feather ${colorArray[1]}" style="color:${
+    colorArray[1]
+  }" disabled="false"/>
+          <i class="fas fa-feather ${colorArray[2]}" style="color:${
+    colorArray[2]
+  }" disabled="false"/>
+          <i class="fas fa-feather ${colorArray[3]}" style="color:${
+    colorArray[3]
+  }" disabled="false"/>
+          <i class="fas fa-feather ${colorArray[4]}" style="color:${
+    colorArray[4]
+  }" disabled="false"/>
+    </div>
+  `;
+  console.log($('.projects').find(`.${poloName}`));
+
   $('.hex')
     .find('.palette-name')
     .remove();
@@ -326,15 +354,15 @@ function postShirts(arr, paletteName, poloName) {
       palette => palette.title === paletteParams.title
     )
   ) {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(paletteParams),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  fetch('/api/v1/palettes', options)
-    .then(response => response.json())
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(paletteParams),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch('/api/v1/palettes', options)
+      .then(response => response.json())
       .then(result => {
         if (!colorTracker.palettes[result.project_id]) {
           colorTracker.palettes[result.project_id] = [
@@ -347,7 +375,7 @@ function postShirts(arr, paletteName, poloName) {
               color_three: result.color_three,
               color_four: result.color_four,
               color_five: result.color_five
-}
+            }
           ];
         } else {
           colorTracker.palettes[result.project_id].push({
@@ -382,35 +410,35 @@ function handleProjectClick(event) {
     $(this).removeClass('fas fa-chevron-down down');
     $(this).addClass('fas fa-chevron-up up');
     if (colorTracker.palettes[projectID]) {
-    colorTracker.palettes[projectID].forEach((palette, index) => {
-      var paletteHTML = `
-  <div class="mini-palettes">
+      colorTracker.palettes[projectID].forEach((palette, index) => {
+        var paletteHTML = `
+      <div class="mini-palettes">
       <div class="title-remove">
-    <h4 class="mini-palette-title">${palette.title}</h4>
+        <h4 class="mini-palette-title">${palette.title}</h4>
         <i class="fas fa-window-close"/>
       </div>
-    <i class="fas fa-feather ${palette.color_one}" style="color:${
-        palette.color_one
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_two}" style="color:${
-        palette.color_two
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_three}" style="color:${
-        palette.color_three
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_four}" style="color:${
-        palette.color_four
-      }" disabled="false"/>
-    <i class="fas fa-feather ${palette.color_five}" style="color:${
-        palette.color_five
-      }" disabled="false"/>
-  </div>
+          <i class="fas fa-feather ${palette.color_one}" style="color:${
+          palette.color_one
+        }" disabled="false"/>
+          <i class="fas fa-feather ${palette.color_two}" style="color:${
+          palette.color_two
+        }" disabled="false"/>
+          <i class="fas fa-feather ${palette.color_three}" style="color:${
+          palette.color_three
+        }" disabled="false"/>
+          <i class="fas fa-feather ${palette.color_four}" style="color:${
+          palette.color_four
+        }" disabled="false"/>
+          <i class="fas fa-feather ${palette.color_five}" style="color:${
+          palette.color_five
+        }" disabled="false"/>
+    </div>
   `;
 
-      $(this)
-        .next('.palettes')
-        .append(paletteHTML);
-    });
+        $(this)
+          .next('.palettes')
+          .append(paletteHTML);
+      });
     }
   } else {
     $(this)
@@ -428,31 +456,28 @@ $('body').on('click', '.mini-palettes', handlePaletteClick);
 function handlePaletteClick(event) {
   event.preventDefault();
   let colors = $(this)
-    .children('h4')
+    .find('h4')
     .text();
+
   let projectName = $(this)
     .parents('.projects-palette-show')
     .children('.project-name')
     .text();
 
   const projectID = colorTracker.projects[projectName];
+  console.log(colorTracker.palettes[projectID]);
 
   const matchingPalette = colorTracker.palettes[projectID].find(
     pallete => pallete.title === colors
   );
+
   Object.keys(matchingPalette)
     .filter(key => key.includes('color'))
     .forEach((key, index) => {
       if (key.includes('color')) {
         prependHex(matchingPalette[key], index);
       }
-  });
-}
-
-$('.hex').on('focus', '.polo-name', handleFocus);
-
-function handleFocus(event) {
-  event.preventDefault();
+    });
 }
 
 $('body').on('click', '.fa-window-close', removePalette);
@@ -473,7 +498,6 @@ function removePalette() {
   const matchingPalette = colorTracker.palettes[projectID].find(
     palette => palette[targetPalette]
   );
-
   const filteredPalletes = colorTracker.palettes[projectID].filter(
     palette => palette.title !== targetPalette
   );
