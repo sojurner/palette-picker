@@ -23,14 +23,18 @@ let colorTracker = {
   projects: {},
   palettes: {}
 };
-
+//fetch palettes and projects on page load
 $('document').ready(() => {
+  //fetch request
   fetch('/api/v1/projects')
+    //json the response
     .then(response => response.json())
+    //with the array result, loop through
     .then(result => {
       result.forEach(project => {
+        // update global colorTracker variable
         colorTracker.projects[project.title] = project.id;
-
+        // template literal for html
         var projectHTML = `
           <div class="projects-palette projects-palette-show">
           <span class="project-name ${project.title}">${project.title}</span>
@@ -38,19 +42,24 @@ $('document').ready(() => {
           <section class="palettes"/>
         </div>
         `;
-
+        //append to html
         $('.projects').append(projectHTML);
+        //make fetch call for respective project
         getPalettes(project.id);
       });
     });
 });
 
 function getPalettes(id) {
+  //fetching projects that have the id of the palette
   fetch(`/api/v1/palettes/${id}/projects`)
     .then(response => response.json())
     .then(result => {
+      //loop through the result
       result.forEach(palette => {
+        //check if the id key already exists in the global variable
         if (!colorTracker.palettes[palette.project_id]) {
+          //add key and set its value to the resulting array obj
           colorTracker.palettes[palette.project_id] = [
             {
               [palette.title]: id,
@@ -63,6 +72,7 @@ function getPalettes(id) {
               color_five: palette.color_five
             }
           ];
+          //if key does exist push to existing array of obj
         } else {
           colorTracker.palettes[palette.project_id].push({
             [palette.title]: id,
@@ -88,23 +98,32 @@ function handleKeyDown(event) {
   var number = 0;
   //checking if there are any existing colors that are locked
   var createdPalette = $('.hex').find('.lock-active').length;
+  //checking if either polo or palette fields have focus
   var poloFocus = $('.polo-name').is(':focus');
   var paletteFocus = $('.palette-name').is(':focus');
 
+  //spacebar is the key pressed, there are no locked colors, neither polo or palettes are on focus
   if (event.keyCode === 32 && !createdPalette && !poloFocus && !paletteFocus) {
-    //if there are none, then a while loop runs to generate 5 new colors, instantiating a color object and passing to a function that converts it to hexcode
+    // a while loop runs to generate 5 new colors
     while (number < 5) {
+      //instantiating a color object
       var rgbColor = new Color();
+      //passing to a function that converts it to hexcode
       var hexCode = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b);
+      //render to the dom
       prependHex(hexCode, number);
+      //increment number to meet base case
       number++;
     }
+    //if the value in the global variable is falsey
     if (!colorTracker.projectField) {
+      //create a h1 element for polo name
       var poloField = $('<h1>', {
         class: 'polo-name',
         contentEditable: 'true',
-        text: 'Edit Polo Name '
+        text: 'Collection Name?'
       });
+      //render to dom
 
       $('html').append(poloField);
 
@@ -125,7 +144,9 @@ function handleKeyDown(event) {
 
     // if there are locked colors then filter the colors that don't have the locked class
   } else if (
+    //if key pressed is 32
     event.keyCode === 32 &&
+    //if there are locked colors
     createdPalette &&
     !poloFocus &&
     !paletteFocus
