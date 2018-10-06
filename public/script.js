@@ -471,3 +471,18 @@ function removePalette() {
     .closest('.palette-control')
     .empty();
 }
+
+$('body').on('click', '.fa-bars, .fa-sort-up', showProjects);
+
+function showProjects() {
+  if ($(this).hasClass('fa-bars')) {
+    $(this).removeClass('fa-bars');
+    $(this).addClass('fa-sort-up');
+  } else {
+    $(this).removeClass('fa-sort-up');
+    $(this).addClass('fa-bars');
+  }
+  $('.projects-palette-show').hasClass('projects-palette')
+    ? $('.projects-palette-show').removeClass('projects-palette')
+    : $('.projects-palette-show').addClass('projects-palette');
+}
