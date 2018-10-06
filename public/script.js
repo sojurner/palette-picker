@@ -468,7 +468,7 @@ function removePalette() {
     .then(result => {});
 
   $(this)
-    .closest('.palette-control')
+    .closest('.mini-palettes')
     .empty();
 }
 
