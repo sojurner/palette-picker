@@ -4,8 +4,12 @@
 - Pick your Favorite colored polos. 
 - Create folders and save shirts to folders
 
-## Project Specs
-- Built using Express, Jquery, HTML/CSS
+## Technologies
+* Node.JS
+  * ExpresJS
+  * KnexJS
+* Jquery 
+* HTML/CSS
 
 ## Link
 [Polo-Picker Heroku](https://polo--picker.herokuapp.com/)
