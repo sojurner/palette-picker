@@ -6,8 +6,8 @@
 
 ## Technologies
 * Node.JS
-  * ExpresJS
-  * KnexJS
+  * Express.JS
+  * Knex.JS
 * Jquery 
 * HTML/CSS
 
