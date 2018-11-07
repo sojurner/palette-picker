@@ -2,9 +2,8 @@
 #### Link
 [Polo-Picker Heroku](https://polo--picker.herokuapp.com/)
 
-"I wonder how that color would look on me?"  Well with Polo-Picker, you can find out!  
-Polo-Picker allows users to create a palette of polos in order to really answer one of lifes greatest questions, 
-"How fabulous do I look in this shirt?"
+Have you ever thought yourself, "I wonder how I look in this color..."  Well with Polo-Picker, you can find out!  
+Polo-Picker allows users to create and save a palette of polos of five.  Now we can finally answer one of lifes greatest questions, "How fabulous do I look in this shirt?"
 
 - Randomly generate different colored polos. 
 - Lock in the polos that you like.
